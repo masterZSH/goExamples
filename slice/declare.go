@@ -33,4 +33,14 @@ func main() {
 	// 不可超过切片索引给切片赋值
 	// slice4[3] = 1                 // range error 会报range error
 
+	// var s1 []int = arr1[:2]
+	// var s2 []int = arr1[2:]
+
+	// arr1[:2] + arr1[2:] // i是一个整数且: 0 <= i <= len(arr1)
+	// len(arr1) <= cap(arr1)
+
+	// 切片在内存中的组织方式实际上是一个有 3 个域的结构体：
+	// 指向相关数组的指针，切片长度以及切片容量。
+	// 下图给出了一个长度为 2，容量为 4 的切片y。
+	fmt.Println(len(slice2))
 }
