@@ -43,4 +43,24 @@ func main() {
 	// 指向相关数组的指针，切片长度以及切片容量。
 	// 下图给出了一个长度为 2，容量为 4 的切片y。
 	fmt.Println(len(slice2))
+
+	// 不要用指针指向切片，切片本身就是引用类型
+	b := []byte{'g', 'o', 'l', 'a', 'n', 'g'}
+	fmt.Println(b[1:4], b[:2], b[2:], b[:])
+	// b[1:4] ['o','l','a']
+	// b[:2] ['g','o']
+	// b[2:] ['l','a','n','g']
+	// b[:]  ['g','o','l','a','n','g']
+
+	// 使用make定义切片
+	var makeSlice1 = make([]int, 10, 20)
+	fmt.Println(makeSlice1)
+	// 使用new定义切片
+	var makeSlice2 = new([20]int)[0:10]
+	fmt.Println(makeSlice2)
+
+	var makeSlice3 = make([]byte, 5)
+	makeSlice3 = makeSlice3[2:4]
+	fmt.Println(len(makeSlice3), cap(makeSlice3))
+
 }
