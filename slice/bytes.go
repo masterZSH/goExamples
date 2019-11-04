@@ -18,6 +18,23 @@ func main() {
 		}
 	}
 	fmt.Print(buffer.String(), "\n")
+
+	// 把一个缓存 buf 分片成两个 切片：
+	// 第一个是前 n 个 bytes，后一个是剩余的，用一行代码实现。
+	var buf = []byte{'a', 'b', 'c'}
+	var bufArr = []([]byte){buf[:1], buf[1:]}
+	fmt.Print(bufArr)
+
+	x := make([]int, 3)
+	fmt.Printf("%p\n", &x) //不变 0xc000004480
+	//y := make([]int, 3)
+	y := &x
+	fmt.Print(*y) //不变 0xc0000044c0
+	fmt.Printf("%p\n", y)
+	x[0] = 1
+	fmt.Println(x)  //[1 0 0]
+	fmt.Println(*y) //[1 0 0]
+
 }
 
 func getNextString() (string, bool) {
