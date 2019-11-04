@@ -28,8 +28,14 @@ func main() {
 	// 因此，返回的切片可能已经指向一个不同的相关数组了。
 	// append 方法总是返回成功，除非系统内存耗尽了。
 
-	bts := AppendByte([]byte{'a', 'b'}, []byte{'c', 'd'}...)
-	fmt.Print(bts)
+	// bts := AppendByte([]byte{'a', 'b'}, []byte{'c', 'd'}...)
+	// fmt.Print(bts)
+	sl := Filter([]int{1, 2, 3, 4}, isOdd)
+	fmt.Print(sl)
+}
+
+func isOdd(i int) bool {
+	return i%2 == 0
 }
 
 func AppendByte(slice []byte, data ...byte) []byte {
@@ -54,4 +60,29 @@ func ap(slice []int, fac int) []int {
 	copy(newSlice, slice)
 	slice = newSlice
 	return slice
+}
+
+// 用顺序函数过滤容器：s 是前 10 个整型的切片。
+// 构造一个函数 Filter，第一个参数是 s，第二个参数是一个 fn func(int) bool，返回满足函数 fn 的元素切片。
+// 通过 fn 测试方法测试当整型值是偶数时的情况。
+
+func Filter(s []int, fn func(int) bool) (ns []int) {
+	ns = make([]int, 0, len(s))
+	for _, v := range s {
+		if fn(v) {
+			ns = append(ns, v)
+		}
+	}
+	return ns
+}
+
+// 写一个函数 InsertStringSlice 将切片插入到另一个切片的指定位置。
+func InsertStringSlice() {
+
+}
+
+// 写一个函数 RemoveStringSlice 将从 start 到 end 索引的元素从切片 中移除。
+
+func RemoveStringSlice() {
+
 }
