@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 )
 
 func main() {
@@ -30,8 +31,13 @@ func main() {
 
 	// bts := AppendByte([]byte{'a', 'b'}, []byte{'c', 'd'}...)
 	// fmt.Print(bts)
-	sl := Filter([]int{1, 2, 3, 4}, isOdd)
-	fmt.Print(sl)
+	// sl := Filter([]int{1, 2, 3, 4}, isOdd)
+	// fmt.Print(sl)
+	// var mergeSlice = InsertStringSlice([]int{1, 2}, []int{5, 5, 5, 5, 5}, 3)
+	// fmt.Print(mergeSlice)
+	// var removeSlice = RemoveStringSlice([]string{"a", "b", "c", "d", "e"}, 1, 2)
+	// fmt.Print(removeSlice)
+
 }
 
 func isOdd(i int) bool {
@@ -76,13 +82,33 @@ func Filter(s []int, fn func(int) bool) (ns []int) {
 	return ns
 }
 
-// 写一个函数 InsertStringSlice 将切片插入到另一个切片的指定位置。
-func InsertStringSlice() {
+type slice = []int
 
+// 写一个函数 InsertStringSlice 将切片插入到另一个切片的指定位置。
+func InsertStringSlice(source slice, target slice, index int) slice {
+	var sliceType = reflect.TypeOf(source)
+	fmt.Print(sliceType)
+	if len(target)-1 < index {
+		return target
+	}
+	leftSlice := target[:index]
+	rightSlice := target[index:]
+	newSlice := make(slice, len(leftSlice))
+	copy(newSlice, leftSlice)
+	newSlice = append(newSlice, source...)
+	newSlice = append(newSlice, rightSlice...)
+	// 扩容
+	return newSlice
 }
 
 // 写一个函数 RemoveStringSlice 将从 start 到 end 索引的元素从切片 中移除。
 
-func RemoveStringSlice() {
-
+//
+func RemoveStringSlice(s []string, start int, end int) (newSlice []string) {
+	newSlice = make([]string, len(s[:start]))
+	copy(newSlice, s[:start])
+	defer func() {
+		newSlice = append(newSlice, s[end:]...)
+	}()
+	return
 }
