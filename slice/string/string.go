@@ -25,7 +25,7 @@ func main() {
 	// fmt.Print(findFileNumbers("../../README.md"))
 	// fmt.Print(reverse("Google"))
 	// fmt.Print(copy([]byte{'a', 'b', 'c', 'c'}))
-	fmt.Print(bubble([]int{3, 2, 1, 5, 4}))
+	fmt.Print(bubble([]int{3, 2, 1, 5, 9, 1}))
 	fmt.Print(mapFunc(mf, []int{1, 2, 3, 4}))
 }
 
