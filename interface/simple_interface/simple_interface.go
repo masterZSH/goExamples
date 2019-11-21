@@ -27,5 +27,9 @@ func main() {
 	s.Set(122)
 	fmt.Println(s.Get())
 
+	if t,ok:=s.(*Simple); ok{
+		fmt.Printf("The type of Simpler is: %T\n", t)
+	}
+
 	fmt.Printf("%+v", s)
 }
