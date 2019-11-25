@@ -17,6 +17,7 @@ func (s St) WriteXML(w io.Writer) {
 }
 
 func T(v interface{}) {
+	// 判断类型
 	x, ok := v.(xmlWriter)
 	fmt.Print(x, ok)
 }
