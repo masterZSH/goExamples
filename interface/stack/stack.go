@@ -1,8 +1,7 @@
-package main
+package stack
 
 import (
 	"errors"
-	"fmt"
 )
 
 // MAX Stack maxlen
@@ -36,15 +35,4 @@ func (s *Stack) Pop() (interface{}, error) {
 		s.data = s.data[:len(s.data)-1]
 	}()
 	return item, nil
-}
-
-func main() {
-	var s = &Stack{}
-	s.Push(1)
-	s.Push("2234")
-	fmt.Printf("%+v", s)
-	fmt.Print(s.Pop())
-
-	fmt.Printf("%+v", s)
-
 }
