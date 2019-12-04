@@ -16,6 +16,8 @@
             "type": "go",
             "request": "launch",
             "mode": "debug",
+            "args": ["-n","../../test.text"],
+            "externalConsole": true,
             "program": "${file}"
         }
     ]

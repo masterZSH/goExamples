@@ -31,7 +31,8 @@ func main() {
 	if flag.NArg() == 0 {
 		cat(bufio.NewReader(os.Stdin))
 	}
-	for i := 0; i < flag.NArg(); i++ {
+	args:=flag.NArg()
+	for i := 0; i < args; i++ {
 		f, err := os.Open(flag.Arg(i))
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%s:error reading from %s: %s\n", os.Args[0], flag.Arg(i), err.Error())
