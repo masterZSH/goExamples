@@ -14,6 +14,9 @@ func main() {
 			fmt.Println("tick")
 		case <-after:
 			fmt.Println("after")
+		default:
+			fmt.Println("    .")
+			time.Sleep(5e7)
 		}
 	}
 }
