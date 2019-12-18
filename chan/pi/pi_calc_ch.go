@@ -44,7 +44,7 @@ func term(ch chan float64, start, end int) {
 func main() {
 	start := time.Now()
 	runtime.GOMAXPROCS(NCPU)
-	fmt.Println(CalculatePi(5000000000))
+	fmt.Println(CalculatePi(50000000))
 	end := time.Now()
 	delta := end.Sub(start)
 	// 对比时间 pi_calc 500ms左右 这个190ms提升很明显
