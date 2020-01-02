@@ -26,7 +26,7 @@ func getData(ch chan float64) {
 func main() {
 	ch := make(chan float64)
 	t1 := time.Now()
-	go pi(ch, 5000000)
+	go pi(ch, 50000000)
 	// getData(ch)
 	fmt.Println(<-ch)
 	t2 := time.Now()

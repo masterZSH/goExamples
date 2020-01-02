@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	ch := make(chan string, 100)
+	ch := make(chan string, 100) 
 	go getData(ch)
 	go setData(ch)
 	time.Sleep(1e9)

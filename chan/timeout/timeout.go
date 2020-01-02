@@ -18,6 +18,8 @@ func s(ch chan int) {
 }
 
 func main() {
+	// 注意缓冲大小设置为 1 是必要的，
+	// 可以避免协程死锁以及确保超时的通道可以被垃圾回收
 	timeout := make(chan bool, 1)
 	ch := make(chan int, 1)
 	go f(timeout)
