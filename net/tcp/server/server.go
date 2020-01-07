@@ -44,7 +44,7 @@ func checkError(error error, info string) {
 func connectionHandler(conn net.Conn) {
 	connFrom := conn.RemoteAddr().String()
 	println("Connection from: ", connFrom)
-	// window linux 不同
+	// Windows 平台下用 "\r\n"，Linux平台下使用 "\n"
 	sendMsg(conn,"12345\r\n")
 }
 
