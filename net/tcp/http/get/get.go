@@ -8,8 +8,9 @@ import (
 )
 
 func main() {
-	var url = "https://v2ex.com"
-	res, err := http.Get(url)
+	// var url = "https://v2ex.com"
+	var errUrl = "https://vvvv.v2.co"
+	res, err := http.Get(errUrl)
 	checkError(err)
 	data, err := ioutil.ReadAll(res.Body)
 	checkError(err)
