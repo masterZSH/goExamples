@@ -20,7 +20,7 @@ func main() {
 	// 获取字符数 最快速
 	fmt.Println(utf8.RuneCountInString(s1))
 
-	// 连接字符串
+	// 连接字符串 使用Buffer比+=好
 	var buff bytes.Buffer
 	buff.WriteString(s1)
 	buff.WriteString("aaaaaa")
