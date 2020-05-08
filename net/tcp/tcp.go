@@ -31,6 +31,5 @@ func doServerStuff(conn net.Conn) {
 			return //终止程序
 		}
 		fmt.Printf("Received data: %v", string(buf[:len]))
-		conn.Close()
 	}
 }
