@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"io"
 	"sync"
 )
 
@@ -32,9 +33,13 @@ func displayCount(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Printf("%v", err)
 	}
-	fmt.Fprintf(f, "count is %d", count)
+	fmt.Fprintf(f, "count     is %d", count)
+	f.Close()
 	// io.Copy(w)
-	fmt.Fprintf(w, "count is %d", count)
+	f,_ = os.Open("1.txt")
+	io.Copy(w,f)
+	
+	// fmt.Fprintf(w, "count is %d", count)
 	mu.Unlock()
 }
 
