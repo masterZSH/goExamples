@@ -1,8 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"runtime"
+)
 
 func main() {
+	defer func() {
+		printStack()
+	}()
 	f()
 	// f()
 	// g()
@@ -34,4 +41,11 @@ func h() {
 		fmt.Println("call defer h()")
 	}()
 	fmt.Println("h()")
+}
+
+// 打印调用栈
+func printStack() {
+	var buf [4096]byte
+	runtime.Stack(buf[:], false)
+	os.Stdout.Write(buf[:])
 }

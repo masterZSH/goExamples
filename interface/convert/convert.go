@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type A interface {
 	print()
 }
@@ -10,7 +12,17 @@ func p(a A) {
 
 }
 
+type M struct {
+	t string
+}
+
+func (m *M) print() {
+	fmt.Println("call print")
+	fmt.Print(m.t)
+}
+
 func main() {
-	var b B
-	b.(A).print()
+	var m B
+	m = &M{}
+	m.(A).print()
 }
