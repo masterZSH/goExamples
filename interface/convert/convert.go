@@ -23,6 +23,6 @@ func (m *M) print() {
 
 func main() {
 	var m B
-	m = &M{}
+	m = &M{"123"}
 	m.(A).print()
 }
