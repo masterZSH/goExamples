@@ -1,8 +1,3 @@
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-// See page 227.
-
-// Netcat is a simple read/write client for TCP servers.
 package main
 
 import (
@@ -12,28 +7,34 @@ import (
 	"os"
 )
 
-//!+
+var (
+	done   = make(chan struct{}) // 连接结束
+	output = os.Stdout           // 输出，默认标准输出,可以修改为输出到文件
+)
+
 func main() {
 	conn, err := net.Dial("tcp", "localhost:6666")
 	if err != nil {
 		log.Fatal(err)
 	}
-	done := make(chan struct{})
-	go func() {
-		io.Copy(os.Stdout, conn) // NOTE: ignoring errors
-		log.Println("done")
-		done <- struct{}{} // signal the main goroutine
-	}()
-	// input
-	mustCopy(conn, os.Stdin)
+	go read(conn)
+	write(conn, os.Stdin)
 	conn.Close()
-	<-done // wait for background goroutine to finish
+
+	// 解除阻塞
+	<-done
 }
 
-//!-
+// 从连接读取消息
+func read(conn net.Conn) {
+	io.Copy(output, conn)
+	log.Println("服务器连接断开...")
+	done <- struct{}{}
+}
 
-func mustCopy(dst io.Writer, src io.Reader) {
-	if _, err := io.Copy(dst, src); err != nil {
+// 写入
+func write(conn net.Conn, src io.Reader) {
+	if _, err := io.Copy(conn, src); err != nil {
 		log.Fatal(err)
 	}
 }

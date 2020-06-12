@@ -45,19 +45,26 @@ func NewMessage(client *Client, content string) *Message {
 }
 
 var (
-	p        int
-	h        bool
-	v        bool
-	out      = os.Stdout
-	enter    = make(chan *Client)
-	leave    = make(chan *Client)
+	// 端口号
+	p int
+	// 是否展示帮助信息
+	h bool
+	// 版本号
+	v bool
+	// 输出流
+	out = os.Stdout
+	// 进入聊天室通道
+	enter = make(chan *Client)
+	// 离开聊天室通道
+	leave = make(chan *Client)
+	// 广播消息通道
 	messages = make(chan *Message)
 )
 
 func init() {
 	flag.IntVar(&p, "p", 6666, "监听端口号")
 	flag.BoolVar(&h, "h", false, "帮助信息")
-	flag.BoolVar(&v, "v", false, "帮助信息")
+	flag.BoolVar(&v, "v", false, "版本")
 }
 
 func main() {
@@ -113,15 +120,12 @@ func broadCast() {
 
 // 客户端连接处理
 func handleConn(conn net.Conn) {
-
 	// 客户端初始化
 	var client *Client
 	client = NewClient(conn)
-
 	// 写入客户端协程
 	go writeToClient(client)
 	client.msg <- NewMessage(client, fmt.Sprintf("请输入名称："))
-
 	// 客户端输入处理
 	scanner := bufio.NewScanner(conn)
 	for scanner.Scan() {
