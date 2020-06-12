@@ -1,21 +1,14 @@
-// Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
-// License: https://creativecommons.org/licenses/by-nc-sa/4.0/
-
-//!+
-
-// Chat is a server that lets clients chat with each other.
 package main
 
 import (
 	"bufio"
+
 	"fmt"
 	"log"
 	"net"
 )
 
-//!+broadcaster
 type client chan<- string // an outgoing message channel
-
 var (
 	entering = make(chan client)
 	leaving  = make(chan client)
@@ -41,9 +34,6 @@ func broadcaster() {
 	}
 }
 
-//!-broadcaster
-
-//!+handleConn
 func handleConn(conn net.Conn) {
 	ch := make(chan string) // outgoing client messages
 	go clientWriter(conn, ch)
@@ -85,5 +75,3 @@ func main() {
 		go handleConn(conn)
 	}
 }
-
-//!-main

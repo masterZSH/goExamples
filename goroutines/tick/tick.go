@@ -11,5 +11,5 @@ func main() {
 		fmt.Printf("%d\n", i)
 		<-tick
 	}
-	
+
 }
