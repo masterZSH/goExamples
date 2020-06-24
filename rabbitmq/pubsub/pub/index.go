@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/streadway/amqp"
 )
@@ -15,7 +17,6 @@ var (
 )
 
 func main() {
-	msg := "11111"
 	url := fmt.Sprintf("amqp://%s:%s@%s:5672/", user, pwd, host)
 	conn, err := amqp.Dial(url)
 	failOnError(err, "Failed to connect to RabbitMQ")
@@ -28,26 +29,33 @@ func main() {
 	err = ch.ExchangeDeclare(
 		"logs",   // name
 		"fanout", // type
-		true,     // durable
+		false,    // durable
 		false,    // auto-deleted
 		false,    // internal
 		false,    // no-wait
 		nil,      // arguments
 	)
+	var msg int
+	for {
 
-	err = ch.Publish(
-		"logs", // exchange
-		"",     // routing key
-		false,  // mandatory
-		false,
-		amqp.Publishing{
-			DeliveryMode: amqp.Persistent,
-			ContentType:  "text/plain",
-			Body:         []byte(msg),
-		})
+		body := strconv.Itoa(msg)
+		err = ch.Publish(
+			"logs", // exchange
+			"",     // routing key
+			false,  // mandatory
+			false,
+			amqp.Publishing{
+				DeliveryMode: amqp.Persistent,
+				ContentType:  "text/plain",
+				Body:         []byte(body),
+			})
 
-	failOnError(err, "Failed to publish a message")
-	log.Printf(" [x] Sent %s", msg)
+		failOnError(err, "Failed to publish a message")
+		log.Printf(" [x] Sent %s", msg)
+		time.Sleep(time.Second)
+		msg++
+	}
+
 }
 
 func failOnError(err error, msg string) {
