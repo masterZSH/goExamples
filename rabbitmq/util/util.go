@@ -46,6 +46,7 @@ func main() {
 		log.Fatal("miss param password")
 	}
 	conn := newConn()
+	defer conn.Close()
 	channel := newChannel(conn)
 	done := make(chan bool)
 	msgs := make(chan string, 10)
@@ -118,10 +119,10 @@ func publish(msgs chan string, channel *amqp.Channel) {
 	queue := newQueue(channel)
 	for msg := range msgs {
 		err := channel.Publish(
-			"",         // exchange
-			queue.Name, // routing key
-			false,      // mandatory
-			false,      // immediate
+			"Topic",        // exchange
+			queue.Name+"*", // routing key
+			false,          // mandatory
+			false,          // immediate
 			amqp.Publishing{
 				ContentType: "text/plain",
 				Body:        []byte(msg),
