@@ -15,11 +15,13 @@ var wg sync.WaitGroup
 
 func main() {
 	a := new(A)
-	wg.Add(4)
+	wg.Add(5)
 	go writeValue(a)
 	go readValue(a)
 	go readValue(a)
 	go readValue(a)
+
+	go readValueAfterSecond(a)
 
 	wg.Wait()
 }
@@ -31,10 +33,18 @@ func readValue(a *A) {
 	wg.Done()
 }
 
+func readValueAfterSecond(a *A) {
+	a.RLock()
+	time.Sleep(time.Second)
+	fmt.Printf("get v:%d\n", a.v)
+	a.RUnlock()
+	wg.Done()
+}
+
 func writeValue(a *A) {
 	a.Lock()
-	fmt.Printf("set v:%d\n", a.v)
 	a.v = 1
+	fmt.Printf("set v:%d\n", a.v)
 	time.Sleep(time.Second)
 	a.Unlock()
 	wg.Done()
