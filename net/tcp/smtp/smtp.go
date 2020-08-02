@@ -5,8 +5,10 @@ import (
 	"net/smtp"
 )
 
+// 简易发送邮件demo
+
 func main() {
-	// qq发送的授权密码
+	// 授权密码获取： qq邮箱-开启pop3/smtp服务时获取
 	auth := smtp.PlainAuth("castinue@qq.com", "castinue@qq.com", "授权密码", "smtp.qq.com")
 	// ynnmqzdklbrhdiei
 	err := smtp.SendMail(
