@@ -2,10 +2,12 @@ package init
 
 import "fmt"
 
-func init() {
+var Mod string
 
+func init() {
+	Mod = "12"
 }
 
 func PrintLog() {
-	fmt.Print("f")
+	fmt.Print(Mod)
 }
