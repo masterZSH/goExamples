@@ -47,9 +47,9 @@ func main() {
 
 	// 绑定queue
 	err = ch.QueueBind(
-		q.Name, // queue name
-		"",     // routing key
-		"logs", // exchange => exchange name
+		q.Name,     // queue name
+		"",         // routing key
+		"test_sms", // exchange => exchange name
 		false,
 		nil,
 	)

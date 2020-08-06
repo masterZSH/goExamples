@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/streadway/amqp"
@@ -27,34 +26,30 @@ func main() {
 
 	// exchange
 	err = ch.ExchangeDeclare(
-		"logs",   // name
-		"fanout", // type
-		false,    // durable
-		false,    // auto-deleted
-		false,    // internal
-		false,    // no-wait
-		nil,      // arguments
+		"test_sms", // name
+		"fanout",   // type
+		false,      // durable
+		false,      // auto-deleted
+		false,      // internal
+		false,      // no-wait
+		nil,        // arguments
 	)
-	var msg int
-	for {
 
-		body := strconv.Itoa(msg)
-		err = ch.Publish(
-			"logs", // exchange
-			"",     // routing key
-			false,  // mandatory
-			false,
-			amqp.Publishing{
-				DeliveryMode: amqp.Persistent,
-				ContentType:  "text/plain",
-				Body:         []byte(body),
-			})
+	body := "测试短信"
+	err = ch.Publish(
+		"test_sms", // exchange
+		"",         // routing key
+		false,      // mandatory
+		false,
+		amqp.Publishing{
+			DeliveryMode: amqp.Persistent,
+			ContentType:  "text/plain",
+			Body:         []byte(body),
+		})
 
-		failOnError(err, "Failed to publish a message")
-		log.Printf(" [x] Sent %s", msg)
-		time.Sleep(time.Second)
-		msg++
-	}
+	failOnError(err, "Failed to publish a message")
+	log.Printf(" [x] Sent %s", body)
+	time.Sleep(time.Second)
 
 }
 
