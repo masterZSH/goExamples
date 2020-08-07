@@ -57,10 +57,13 @@ func main() {
 	forever := make(chan bool)
 	go func() {
 		for d := range msgs {
+			// 处理消息，发送短信
 			log.Printf("Received a message: %s", d.Body)
+			// 延时处理
+			// time.Sleep()
 		}
 	}()
-
+	log.Printf(" 连接成功\n")
 	log.Printf(" [*] Waiting for messages. To exit press CTRL+C")
 	<-forever
 }
