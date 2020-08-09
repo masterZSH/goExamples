@@ -9,6 +9,6 @@ func main() {
 	// slice
 	slice := make([]int, 10)
 	fmt.Println(slice)
-	
+
 	// 初始化
 }

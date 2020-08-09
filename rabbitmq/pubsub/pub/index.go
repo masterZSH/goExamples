@@ -1,10 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/streadway/amqp"
@@ -15,6 +15,11 @@ var (
 	user = os.Getenv("rbuser")
 	pwd  = os.Getenv("rbpwd")
 )
+
+type Msg struct {
+	Mobile string `json:"mobile"`
+	Msg    string `json:"msg"`
+}
 
 func main() {
 	url := fmt.Sprintf("amqp://%s:%s@%s:5672/", user, pwd, host)
@@ -27,34 +32,35 @@ func main() {
 
 	// exchange
 	err = ch.ExchangeDeclare(
-		"logs",   // name
-		"fanout", // type
-		false,    // durable
-		false,    // auto-deleted
-		false,    // internal
-		false,    // no-wait
-		nil,      // arguments
+		"test_sms", // name
+		"fanout",   // type
+		false,      // durable
+		false,      // auto-deleted
+		false,      // internal
+		false,      // no-wait
+		nil,        // arguments
 	)
-	var msg int
-	for {
 
-		body := strconv.Itoa(msg)
-		err = ch.Publish(
-			"logs", // exchange
-			"",     // routing key
-			false,  // mandatory
-			false,
-			amqp.Publishing{
-				DeliveryMode: amqp.Persistent,
-				ContentType:  "text/plain",
-				Body:         []byte(body),
-			})
+	// ignore error
+	body, _ := json.Marshal(Msg{
+		Mobile: "18164464982",
+		Msg:    "123",
+	})
 
-		failOnError(err, "Failed to publish a message")
-		log.Printf(" [x] Sent %s", msg)
-		time.Sleep(time.Second)
-		msg++
-	}
+	err = ch.Publish(
+		"test_sms", // exchange
+		"",         // routing key
+		false,      // mandatory
+		false,
+		amqp.Publishing{
+			DeliveryMode: amqp.Persistent,
+			ContentType:  "application/json",
+			Body:         body,
+		})
+
+	failOnError(err, "Failed to publish a message")
+	log.Printf(" [x] Sent %s", body)
+	time.Sleep(time.Second)
 
 }
 

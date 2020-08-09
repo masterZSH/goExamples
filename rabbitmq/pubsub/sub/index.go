@@ -47,9 +47,9 @@ func main() {
 
 	// 绑定queue
 	err = ch.QueueBind(
-		q.Name, // queue name
-		"",     // routing key
-		"logs", // exchange => exchange name
+		q.Name,     // queue name
+		"",         // routing key
+		"test_sms", // exchange => exchange name
 		false,
 		nil,
 	)
@@ -57,10 +57,13 @@ func main() {
 	forever := make(chan bool)
 	go func() {
 		for d := range msgs {
+			// 处理消息，发送短信
 			log.Printf("Received a message: %s", d.Body)
+			// 延时处理
+			// time.Sleep()
 		}
 	}()
-
+	log.Printf(" 连接成功\n")
 	log.Printf(" [*] Waiting for messages. To exit press CTRL+C")
 	<-forever
 }
