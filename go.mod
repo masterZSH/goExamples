@@ -15,6 +15,7 @@ require (
 	github.com/sirupsen/logrus v1.6.0
 	github.com/streadway/amqp v1.0.0
 	golang.org/x/net v0.0.0-20200707034311-ab3426394381
+	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 	golang.org/x/sys v0.0.0-20200824131525-c12d262b63d8 // indirect
 	google.golang.org/genproto v0.0.0-20200709005830-7a2ca40e9dc3 // indirect
 	google.golang.org/grpc v1.30.0
