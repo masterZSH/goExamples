@@ -18,5 +18,6 @@ func main() {
 
 	slice1 = append(slice1, "e")
 	fmt.Print(slice1) // [a,b,e]
-	fmt.Print(slice)
+	// 底层数组的值变了
+	fmt.Print(slice) // [a,b,e,d]
 }
