@@ -7,6 +7,7 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/google/pprof v0.0.0-20200708004538-1a94d8640e99 // indirect
 	github.com/gorilla/websocket v1.4.2
+	github.com/graphql-go/graphql v0.7.9
 	github.com/ianlancetaylor/demangle v0.0.0-20200824232613-28f6c0f3b639 // indirect
 	github.com/jinzhu/gorm v1.9.15
 	github.com/micro/examples v0.2.0
