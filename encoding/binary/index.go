@@ -19,6 +19,7 @@ func main() {
 
 	// bs 创建Buffer字节缓冲区
 	bs := new(bytes.Buffer)
-	binary.Write(bs, binary.LittleEndian, uint32(14))
+
+	binary.Write(bs, binary.LittleEndian, uint32(14)) // unit32 4个字节
 	fmt.Printf("% x\n", bs.Bytes())
 }
