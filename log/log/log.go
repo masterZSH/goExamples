@@ -52,7 +52,7 @@ func (o *Out) Write(p []byte) (n int, err error) {
 	day := t.Format(defaultDateTimestampFormat)
 	fmt.Println(day)
 	pt := path.Join(o.BaseDir, day)
-	err = os.Mkdir(pt, 0766)
+	err = os.MkDir(pt, 0766)
 	return
 }
 

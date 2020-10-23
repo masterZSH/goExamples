@@ -9,7 +9,6 @@ func main() {
 	l := log.NewLogger(&log.Out{
 		BaseDir: "D:\\log\\",
 	})
-
 	// fields 字段
 	fields := make(map[string]interface{})
 	fields["name"] = "z"
