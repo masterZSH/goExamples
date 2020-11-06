@@ -14,6 +14,7 @@ require (
 	github.com/micro/go-micro/v2 v2.9.0 // indirect
 	github.com/pkg/profile v1.5.0
 	github.com/sirupsen/logrus v1.6.0
+	github.com/spf13/viper v1.7.1
 	github.com/streadway/amqp v1.0.0
 	github.com/streadway/handy v0.0.0-20200128134331-0f66f006fb2e // indirect
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
