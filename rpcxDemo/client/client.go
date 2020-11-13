@@ -23,9 +23,12 @@ func main() {
 	addr2 := "localhost:8973"
 
 	// zookeeper  etcd
-
+	// 设置自动心跳1s
+	option := client.DefaultOption
+	option.Heartbeat = true
+	option.HeartbeatInterval = time.Second
 	d := client.NewMultipleServersDiscovery([]*client.KVPair{{Key: addr1}, {Key: addr2}})
-	xclient := client.NewXClient("User", client.Failtry, client.RandomSelect, d, client.DefaultOption)
+	xclient := client.NewXClient("User", client.Failtry, client.RandomSelect, d, option)
 	defer xclient.Close()
 
 	args := &user.Args{
