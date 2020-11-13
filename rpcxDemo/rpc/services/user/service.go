@@ -23,7 +23,7 @@ type User struct {
 func (t *User) GetUser(ctx context.Context, args *Args, reply *Reply) error {
 	fmt.Printf("find user by userID: %d\n", args.UserID)
 	reply.U = User{
-		Name: "test8972",
+		Name: "test8973",
 		Age:  12,
 	}
 	return nil
