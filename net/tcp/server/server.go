@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"net"
+	"time"
 )
 
 // MaxRead 最大读取byte数
@@ -45,11 +46,16 @@ func connectionHandler(conn net.Conn) {
 	connFrom := conn.RemoteAddr().String()
 	println("Connection from: ", connFrom)
 	// Windows 平台下用 "\r\n"，Linux平台下使用 "\n"
-	sendMsg(conn,"12345\r\n")
+	for {
+		t := time.Now().Format("2006-05-04 15:04:05")
+		sendMsg(conn, t+"\r\n")
+		time.Sleep(time.Second)
+	}
 }
 
-func sendMsg(conn net.Conn, msg string)  {
+func sendMsg(conn net.Conn, msg string) {
 	obuf := []byte(msg)
 	wrote, err := conn.Write(obuf)
-	checkError(err,"Write :wrote error"+string(wrote))
+	fmt.Printf("send msg : %s\n", msg)
+	checkError(err, "Write :wrote error"+string(wrote))
 }

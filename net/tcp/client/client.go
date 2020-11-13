@@ -17,7 +17,10 @@ func main() {
 	hostAndPort := fmt.Sprintf("%s:%s", flag.Arg(0), flag.Arg(1))
 	// init server
 	conn, err := net.Dial("tcp", hostAndPort) // tcp ipv4
+
 	checkError(err, "conn error")
+	fmt.Printf("conn %s success\n", conn.RemoteAddr())
+
 	io.WriteString(conn, "GET / \n")
 	checkError(err, "conn error")
 	read := true
@@ -26,7 +29,8 @@ func main() {
 	for read {
 		count, err = conn.Read(data)
 		read = (err == nil)
-		fmt.Printf(string(data[0:count]))
+		msg := string(data[0:count])
+		fmt.Printf("receive msg :%s\n", msg)
 	}
 	conn.Close()
 }
