@@ -19,6 +19,7 @@ func main() {
 	conn, err := net.Dial("tcp", hostAndPort) // tcp ipv4
 
 	checkError(err, "conn error")
+	// 地址信息
 	fmt.Printf("conn %s success\n", conn.RemoteAddr())
 
 	io.WriteString(conn, "GET / \n")
