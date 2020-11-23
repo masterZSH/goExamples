@@ -27,4 +27,5 @@ require (
 	google.golang.org/grpc/examples v0.0.0-20200709232328-d8193ee9cc3e // indirect
 	google.golang.org/grpc/security/advancedtls v0.0.0-20200709232328-d8193ee9cc3e // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
+	v2ray.com/core v4.19.1+incompatible
 )
