@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"os"
 )
 
@@ -12,6 +11,4 @@ func main() {
 	for input.Scan() {
 		counts[input.Text()]++
 	}
-	
-
 }
