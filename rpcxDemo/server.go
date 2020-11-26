@@ -6,6 +6,8 @@ import (
 	"main/rpc/services/user"
 	"time"
 
+	"github.com/docker/libkv/store"
+
 	"github.com/rcrowley/go-metrics"
 	"github.com/smallnest/rpcx/server"
 	"github.com/smallnest/rpcx/serverplugin"
@@ -29,12 +31,18 @@ func main() {
 }
 
 func addRegistryPlugin(s *server.Server) {
+
+	// 注意etcd版本
 	r := &serverplugin.EtcdV3RegisterPlugin{
 		ServiceAddress: "tcp@" + *addr,
 		EtcdServers:    []string{*etcdAddr},
 		BasePath:       *basePath,
 		Metrics:        metrics.NewRegistry(),
 		UpdateInterval: time.Minute,
+		Options: &store.Config{
+			Username: "zsh",
+			Password: "123456",
+		},
 	}
 	err := r.Start()
 	if err != nil {

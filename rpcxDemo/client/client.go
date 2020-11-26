@@ -7,11 +7,15 @@ import (
 	"main/rpc/services/user"
 	"time"
 
+	"github.com/docker/libkv/store"
+
 	"github.com/smallnest/rpcx/client"
 )
 
 var (
-	addr = flag.String("addr", "localhost:8972", "server address")
+	addr     = flag.String("addr", "localhost:8972", "server address")
+	etcdAddr = flag.String("etcd", "127.0.0.1:2379", "etcd address")
+	basePath = flag.String("basePath", "zsh", "base path")
 )
 
 func main() {
@@ -19,15 +23,30 @@ func main() {
 	// d := client.NewPeer2PeerDiscovery("tcp@"+*addr, "")
 
 	// 多台服务器提供相同的服务
-	addr1 := "localhost:8972"
-	addr2 := "localhost:8973"
+	// addr1 := "localhost:8972"
+	// addr2 := "localhost:8973"
 
 	// zookeeper  etcd
 	// 设置自动心跳1s
 	option := client.DefaultOption
 	option.Heartbeat = true
 	option.HeartbeatInterval = time.Second
-	d := client.NewMultipleServersDiscovery([]*client.KVPair{{Key: addr1}, {Key: addr2}})
+
+	// 设置超时时间
+	option.ConnectTimeout = 10 * time.Second
+
+	// d := client.NewMultipleServersDiscovery([]*client.KVPair{{Key: addr1}, {Key: addr2}})
+
+	// etcdv3 服务发现
+
+	// Auth
+	cg := &store.Config{
+		Username: "zsh",
+		Password: "123456",
+	}
+
+	d := client.NewEtcdV3Discovery(*basePath, "User", []string{*etcdAddr}, cg)
+
 	xclient := client.NewXClient("User", client.Failtry, client.RandomSelect, d, option)
 	defer xclient.Close()
 
