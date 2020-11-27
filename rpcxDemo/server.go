@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+	"errors"
 	"flag"
 	"log"
 	"main/rpc/services/user"
@@ -9,6 +11,7 @@ import (
 	"github.com/docker/libkv/store"
 
 	"github.com/rcrowley/go-metrics"
+	"github.com/smallnest/rpcx/protocol"
 	"github.com/smallnest/rpcx/server"
 	"github.com/smallnest/rpcx/serverplugin"
 )
@@ -27,6 +30,10 @@ func main() {
 	addRegistryPlugin(s)
 	//s.RegisterName("User", new(user.User), "")
 	s.Register(new(user.User), "")
+
+	// auth
+	s.AuthFunc = auth
+
 	s.Serve("tcp", *addr)
 }
 
@@ -49,4 +56,12 @@ func addRegistryPlugin(s *server.Server) {
 		log.Fatal(err)
 	}
 	s.Plugins.Add(r)
+}
+
+func auth(ctx context.Context, req *protocol.Message, token string) error {
+
+	if token == "bearer tGzv3JOkF0XG5Qx2TlKWIA" {
+		return nil
+	}
+	return errors.New("invalid token")
 }

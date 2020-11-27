@@ -10,6 +10,7 @@ import (
 	"github.com/docker/libkv/store"
 
 	"github.com/smallnest/rpcx/client"
+	"github.com/smallnest/rpcx/share"
 )
 
 var (
@@ -49,6 +50,8 @@ func main() {
 
 	// 路由模式-随机选择
 	xclient := client.NewXClient("User", client.Failtry, client.RandomSelect, d, option)
+	xclient.Auth("bearer abcdefg1234567")
+
 	defer xclient.Close()
 
 	args := &user.Args{
@@ -59,7 +62,9 @@ func main() {
 		reply := &user.Reply{}
 
 		// 同步 异步使用Go
-		err := xclient.Call(context.Background(), "GetUser", args, reply)
+		ctx := context.WithValue(context.Background(), share.ReqMetaDataKey, make(map[string]string))
+
+		err := xclient.Call(ctx, "GetUser", args, reply)
 
 		// 广播模式 调用节点
 		// err := xclient.Broadcast(context.Background(), "GetUser", args, reply)
