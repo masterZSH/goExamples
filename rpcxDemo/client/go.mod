@@ -18,3 +18,7 @@ require (
 )
 
 replace google.golang.org/grpc => google.golang.org/grpc v1.29.0
+
+replace github.com/masterZSH/rservices => github/masterZSH/rservices 
+
+

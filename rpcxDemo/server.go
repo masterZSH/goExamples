@@ -2,15 +2,18 @@ package main
 
 import (
 	"context"
-	"errors"
 	"flag"
 	"log"
-	"main/rpc/services/user"
+
+	ah "github.com/masterZSH/rservices/auth"
+	"github.com/masterZSH/rservices/user"
+
 	"time"
 
 	"github.com/docker/libkv/store"
 
 	"github.com/rcrowley/go-metrics"
+	"github.com/smallnest/rpcx/client"
 	"github.com/smallnest/rpcx/protocol"
 	"github.com/smallnest/rpcx/server"
 	"github.com/smallnest/rpcx/serverplugin"
@@ -28,17 +31,13 @@ func main() {
 	flag.Parse()
 	s := server.NewServer()
 	addRegistryPlugin(s)
-	//s.RegisterName("User", new(user.User), "")
 	s.Register(new(user.User), "")
-
 	// auth
 	s.AuthFunc = auth
-
 	s.Serve("tcp", *addr)
 }
 
 func addRegistryPlugin(s *server.Server) {
-
 	// 注意etcd版本
 	r := &serverplugin.EtcdV3RegisterPlugin{
 		ServiceAddress: "tcp@" + *addr,
@@ -59,9 +58,34 @@ func addRegistryPlugin(s *server.Server) {
 }
 
 func auth(ctx context.Context, req *protocol.Message, token string) error {
-
-	if token == "bearer tGzv3JOkF0XG5Qx2TlKWIA" {
-		return nil
+	err := validateToken(token)
+	if err != nil {
+		return ah.ErrInvalidToken
 	}
-	return errors.New("invalid token")
+	return nil
+}
+
+func validateToken(tokenString string) error {
+	option := client.DefaultOption
+	option.Heartbeat = true
+	option.HeartbeatInterval = time.Second
+	option.ConnectTimeout = 10 * time.Second
+	// Auth
+	cg := &store.Config{
+		Username: "zsh",
+		Password: "123456",
+	}
+	d := client.NewEtcdV3Discovery(*basePath, "Validate", []string{*etcdAddr}, cg)
+	xclient := client.NewXClient("Validate", client.Failfast, client.RandomSelect, d, option)
+	defer xclient.Close()
+	args := &ah.ValidateArgs{
+		Token: tokenString,
+	}
+	reply := &ah.ValidateReply{}
+	// 同步 异步使用Go
+	err := xclient.Call(context.Background(), "ValidateToken", args, reply)
+	if err != nil {
+		return err
+	}
+	return err
 }
