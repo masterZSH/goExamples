@@ -3,10 +3,11 @@ module main
 go 1.14
 
 require (
+	github.com/cyberdelia/go-metrics-graphite v0.0.0-20161219230853-39f87cc3b432
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/docker/libkv v0.2.1
 	github.com/json-iterator/go v1.1.9 // indirect
-	github.com/masterZSH/rservices v0.0.0-20201127074551-3c5a6ccf1fd0
+	github.com/masterZSH/rservices v0.0.0-20201127082259-c285515e966d
 	github.com/rcrowley/go-metrics v0.0.0-20200313005456-10cdbea86bc0
 	github.com/smallnest/rpcx v0.0.0-20201027145221-c31b15be63d4
 )

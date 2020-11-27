@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"log"
+	"net"
 
 	ah "github.com/masterZSH/rservices/auth"
 	"github.com/masterZSH/rservices/user"
@@ -12,7 +13,9 @@ import (
 
 	"github.com/docker/libkv/store"
 
-	"github.com/rcrowley/go-metrics"
+	graphite "github.com/cyberdelia/go-metrics-graphite"
+
+	metrics "github.com/rcrowley/go-metrics"
 	"github.com/smallnest/rpcx/client"
 	"github.com/smallnest/rpcx/protocol"
 	"github.com/smallnest/rpcx/server"
@@ -55,6 +58,11 @@ func addRegistryPlugin(s *server.Server) {
 		log.Fatal(err)
 	}
 	s.Plugins.Add(r)
+
+	p := serverplugin.NewMetricsPlugin(metrics.DefaultRegistry)
+	s.Plugins.Add(p)
+	startMetrics()
+
 }
 
 func auth(ctx context.Context, req *protocol.Message, token string) error {
@@ -88,4 +96,12 @@ func validateToken(tokenString string) error {
 		return err
 	}
 	return err
+}
+
+func startMetrics() {
+	metrics.RegisterRuntimeMemStats(metrics.DefaultRegistry)
+	go metrics.CaptureRuntimeMemStats(metrics.DefaultRegistry, time.Second)
+
+	addr, _ := net.ResolveTCPAddr("tcp", "127.0.0.1:2003")
+	go graphite.Graphite(metrics.DefaultRegistry, 1e9, "rpcx.services.host.127_0_0_1", addr)
 }
