@@ -63,6 +63,10 @@ func addRegistryPlugin(s *server.Server) {
 	s.Plugins.Add(p)
 	startMetrics()
 
+	// 限流 30s 1000
+	limit := serverplugin.NewRateLimitingPlugin(30*time.Second, 10000)
+	s.Plugins.Add(limit)
+
 }
 
 func auth(ctx context.Context, req *protocol.Message, token string) error {
