@@ -106,6 +106,9 @@ func startMetrics() {
 	metrics.RegisterRuntimeMemStats(metrics.DefaultRegistry)
 	go metrics.CaptureRuntimeMemStats(metrics.DefaultRegistry, time.Second)
 
-	addr, _ := net.ResolveTCPAddr("tcp", "127.0.0.1:2003")
+	// 配置graphite地址
+	addr, _ := net.ResolveTCPAddr("tcp", "111.229.204.111:2003")
+
+	// 监控节点名称 rpcx.services.host + 服务器ip地址
 	go graphite.Graphite(metrics.DefaultRegistry, 1e9, "rpcx.services.host.127_0_0_1", addr)
 }

@@ -118,3 +118,27 @@ etcd --name infra2  --listen-client-urls http://localhost:22379 --advertise-clie
 
 etcd --name infra3 --listen-client-urls http://localhost:32379 --advertise-client-urls http://127.0.0.1:32379 --listen-peer-urls http://127.0.0.1:32380 --initial-advertise-peer-urls  http://127.0.0.1:32380 --initial-cluster-token etcd-cluster-1 --initial-cluster 'infra1=http://127.0.0.1:12380,infra2=http://127.0.0.1:22380,infra3=http://127.0.0.1:32380' --initial-cluster-state new --enable-pprof --logger=zap --log-outputs=stderr
 ```
+
+
+
+## graphite 监控服务
+
+```
+docker run -d\
+ --name graphite\
+ --restart=always\
+ -p 8110:80\
+ -p 2003-2004:2003-2004\
+ -p 2023-2024:2023-2024\
+ -p 8125:8125/udp\
+ -p 8126:8126\
+ graphiteapp/graphite-statsd
+```
+
+web端口8110
+默认账户 root:root
+
+
+更新时区
+
+进入容器 /opt/graphite/webapp/graphite/ 修改settings.py/local_settings.py TIME_ZONE = 'Asia/Shanghai'
