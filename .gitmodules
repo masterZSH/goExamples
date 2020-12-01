@@ -1,0 +1,3 @@
+[submodule "mino"]
+	path = mino
+	url = https://github.com/masterZSH/mino.git
