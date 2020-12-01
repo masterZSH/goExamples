@@ -1,9 +1,6 @@
 package log
 
 import (
-	"encoding/json"
-	"errors"
-	"fmt"
 	"io"
 	"os"
 	"path"
@@ -12,47 +9,55 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-const defaultTimestampFormat = "2006-01-02 15:04:05"
-const defaultDateTimestampFormat = "2006-01-02"
-
-var (
-	// ErrNoTimeField 没有时间字段
-	ErrNoTimeField = errors.New("no time field")
-	// ErrInvalidTime 错误的时间
-	ErrInvalidTime = errors.New("invalid time")
+const (
+	defaultFileExtName         = ".log"
+	defaultBaseDir             = "/tmp"
+	defaultTimestampFormat     = "2006-01-02 15:04:05"
+	defaultHourTimeStampFormat = "15"
+	defaultDateTimestampFormat = "2006-01-02"
 )
 
 // Out 输出日志器
 // 按时间 天创建目录 每小时生成文件
 type Out struct {
-	BaseDir string
+	BaseDir     string
+	FileExtName string
 }
 
-// Write 只支持写入json格式的文件
+// NewOut 新建输出
+func NewOut(baseDir string, fileExtName string) *Out {
+	if baseDir == "" {
+		baseDir = defaultBaseDir
+	}
+	if fileExtName == "" {
+		fileExtName = defaultFileExtName
+	}
+	return &Out{
+		BaseDir:     baseDir,
+		FileExtName: fileExtName,
+	}
+}
+
+// Write
 func (o *Out) Write(p []byte) (n int, err error) {
-	var v log.Fields
-	err = json.Unmarshal(p, &v)
+	now := time.Now()
 	if err != nil {
 		return
 	}
-	timeVal, exist := v["time"]
-	if !exist {
-		err = ErrNoTimeField
-		return
-	}
-	realTime, ok := timeVal.(string)
-	if !ok {
-		err = ErrInvalidTime
-		return
-	}
-	t, err := time.Parse(defaultTimestampFormat, realTime)
-	if err != nil {
-		return
-	}
-	day := t.Format(defaultDateTimestampFormat)
-	fmt.Println(day)
+	day := now.Format(defaultDateTimestampFormat)
 	pt := path.Join(o.BaseDir, day)
-	err = os.MkDir(pt, 0766)
+	s, _ := os.Stat(pt)
+	if s == nil {
+		if err = os.Mkdir(pt, 0766); err != nil {
+			return
+		}
+	}
+	filePath := path.Join(pt, now.Format(defaultHourTimeStampFormat))
+	f, err := os.OpenFile(filePath+o.FileExtName, os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		return
+	}
+	n, err = f.Write(p)
 	return
 }
 
@@ -63,5 +68,17 @@ func NewLogger(out io.Writer) *log.Logger {
 		TimestampFormat: defaultTimestampFormat,
 	})
 	l.SetOutput(out)
+	return l
+}
+
+// New new logger
+func New(baseDir string) *log.Logger {
+	l := log.New()
+	l.SetFormatter(&log.JSONFormatter{
+		TimestampFormat: defaultTimestampFormat,
+	})
+	l.SetOutput(&Out{
+		BaseDir: baseDir,
+	})
 	return l
 }
