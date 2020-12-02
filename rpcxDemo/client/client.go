@@ -17,7 +17,7 @@ import (
 )
 
 var (
-	addr     = flag.String("addr", "localhost:8972", "server address")
+	addr     = flag.String("addr", "localhost:8973", "server address")
 	etcdAddr = flag.String("etcd", "127.0.0.1:2379", "etcd address")
 	basePath = flag.String("basePath", "zsh", "base path")
 )
