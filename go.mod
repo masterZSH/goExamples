@@ -13,6 +13,7 @@ require (
 	github.com/jinzhu/gorm v1.9.15
 	github.com/micro/examples v0.2.0 // indirect
 	github.com/micro/go-micro/v2 v2.9.0 // indirect
+	github.com/pires/go-proxyproto v0.3.3
 	github.com/pkg/profile v1.5.0
 	github.com/sirupsen/logrus v1.6.0
 	github.com/smallnest/rpcx v0.0.0-20201125003204-f058e82491ce // indirect
