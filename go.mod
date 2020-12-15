@@ -9,6 +9,7 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/graphql-go/graphql v0.7.9
 	github.com/ianlancetaylor/demangle v0.0.0-20200824232613-28f6c0f3b639 // indirect
+	github.com/influxdata/influxdb-client-go/v2 v2.2.0
 	github.com/jinzhu/gorm v1.9.15
 	github.com/micro/examples v0.2.0 // indirect
 	github.com/micro/go-micro/v2 v2.9.0 // indirect
