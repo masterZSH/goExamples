@@ -4,8 +4,11 @@ go 1.13
 
 require (
 	github.com/Shopify/sarama v1.26.4
+	github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5
+	github.com/elazarl/goproxy v0.0.0-20201021153353-00ad82a08272
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/google/pprof v0.0.0-20200708004538-1a94d8640e99 // indirect
+	github.com/google/tcpproxy v0.0.0-20200125044825-b6bb9b5b8252
 	github.com/gorilla/websocket v1.4.2
 	github.com/graphql-go/graphql v0.7.9
 	github.com/ianlancetaylor/demangle v0.0.0-20200824232613-28f6c0f3b639 // indirect
