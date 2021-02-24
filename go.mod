@@ -14,8 +14,11 @@ require (
 	github.com/ianlancetaylor/demangle v0.0.0-20200824232613-28f6c0f3b639 // indirect
 	github.com/influxdata/influxdb-client-go/v2 v2.2.0
 	github.com/jinzhu/gorm v1.9.15
+	github.com/libp2p/go-libp2p v0.13.0
+	github.com/libp2p/go-libp2p-core v0.8.5
 	github.com/micro/examples v0.2.0 // indirect
 	github.com/micro/go-micro/v2 v2.9.0 // indirect
+	github.com/multiformats/go-multiaddr v0.3.1
 	github.com/pires/go-proxyproto v0.3.3
 	github.com/pkg/profile v1.5.0
 	github.com/sirupsen/logrus v1.6.0
