@@ -21,4 +21,18 @@ func handle(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got connection: %s", r.Proto)
 	// 向客户发送一条消息
 	w.Write([]byte("Hello"))
+
+	pusher, ok := w.(http.Pusher)
+
+	if !ok {
+		log.Println("Can't push to client")
+	} else {
+		err := pusher.Push("/2s", nil)
+		if err != nil {
+			log.Printf("Failed push: %v", err)
+		}
+	}
+	// Send response body
+	w.Write([]byte("111"))
+
 }
