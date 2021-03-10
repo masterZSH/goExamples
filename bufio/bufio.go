@@ -33,6 +33,10 @@ func main() {
 func write() {
 	w := bufio.NewWriter(os.Stdout)
 	defer w.Flush()
+	w.Write([]byte{'a'})
+	w.WriteByte('b')
+	w.WriteRune('c')
+	w.WriteString("d")
 	fmt.Fprintf(w, "%s", "test1")
 	fmt.Fprintf(w, "%s", "test2")
 
