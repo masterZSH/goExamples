@@ -26,4 +26,14 @@ func main() {
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
 	}
+
+	write()
+}
+
+func write() {
+	w := bufio.NewWriter(os.Stdout)
+	defer w.Flush()
+	fmt.Fprintf(w, "%s", "test1")
+	fmt.Fprintf(w, "%s", "test2")
+
 }
