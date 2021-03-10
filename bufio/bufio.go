@@ -36,6 +36,8 @@ func write() {
 	w.Write([]byte{'a'})
 	w.WriteByte('b')
 	w.WriteRune('c')
+	fmt.Print(w.Available())
+
 	w.WriteString("d")
 	fmt.Fprintf(w, "%s", "test1")
 	fmt.Fprintf(w, "%s", "test2")
