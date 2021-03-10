@@ -3,11 +3,13 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"math/rand"
 	"net"
 	"os"
+	"path"
 	"time"
 )
 
@@ -67,16 +69,28 @@ func handleConn(conn net.Conn) {
 	remoteAddr := conn.RemoteAddr()
 	fmt.Println(remoteAddr)
 	fmt.Print(conn)
-	buf := make([]byte, 4096)
+	buf := make([]byte, 4096*10000)
+	fileName := ""
 	for {
 		n, err := conn.Read(buf)
 		if err != nil {
+			if err != io.EOF {
+				fmt.Println("read error:", err)
+			}
+			fileName = ""
 			log.Println(err)
 			return
 		}
 		if n == 0 {
 			continue
 		}
+		fmt.Printf("get file -----%s----\n", fileName)
+		if fileName != "" {
+			os.WriteFile(fileName, buf[:n], 666)
+			fileName = ""
+			continue
+		}
+		fileName = string(buf[:n])
 		fmt.Printf("%s\n", buf[:n])
 	}
 }
@@ -99,20 +113,26 @@ func connServer() {
 		log.Println("please input client name")
 		file := scanner.Text()
 		f, err := ioutil.ReadFile(file)
+		ext := path.Ext(file)
 		if err != nil {
 			log.Printf("read file err:%s\n", err)
 			continue
 		}
+		conn.Write([]byte("123" + ext))
 		conn.Write(f)
 		break
 	}
-	readBuf := make([]byte, 4096)
+	// readBuf := make([]byte, 4096)
+	// fileName := ""
+
 	for {
-		n, err := conn.Read(readBuf)
+		// n, err := conn.Read(readBuf)
+		conent, err := ioutil.ReadAll(conn)
 		if err != nil {
 			log.Println(err)
 			return
 		}
-		log.Printf("%s\n", readBuf[:n])
+
+		log.Printf("%s\n", conent)
 	}
 }
