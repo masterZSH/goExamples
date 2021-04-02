@@ -27,9 +27,12 @@ require (
 	github.com/spf13/viper v1.7.1
 	github.com/streadway/amqp v1.0.0
 	github.com/streadway/handy v0.0.0-20200128134331-0f66f006fb2e // indirect
+	go.uber.org/goleak v1.1.10 // indirect
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
+	golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5 // indirect
 	golang.org/x/net v0.0.0-20201021035429-f5854403a974
 	golang.org/x/sync v0.0.0-20201020160332-67f06af15bc9
+	golang.org/x/tools v0.1.0 // indirect
 	google.golang.org/genproto v0.0.0-20200918140846-d0d605568037 // indirect
 	google.golang.org/grpc v1.32.0
 	google.golang.org/grpc/examples v0.0.0-20200709232328-d8193ee9cc3e // indirect
