@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"crypto/tls"
 	"errors"
 	"fmt"
@@ -108,26 +109,25 @@ func serveConn(conn net.Conn) {
 
 	// set write deadline
 	conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
-
-	//
-	//
-	// read large data
 	buf := make([]byte, 0, 4<<10)
 	tmp := make([]byte, 256)
 	for {
-		// read from conn
-		// r := &connReader{conn: conn}
-		// buf := bufio.NewReader(r)
-		// r.Read(p)
-		p := make([]byte, 5)
-		n, er := conn.Read(p)
-		atEOF := errors.Is(er, io.EOF)
-		if atEOF {
+		n, er := conn.Read(tmp)
+		if er != nil {
+			atEOF := errors.Is(er, io.EOF)
+			if atEOF {
+				fmt.Printf("total size:%d\n", len(buf))
+				break
+			}
 			break
 		}
-		buf = append(buf, tmp[:n]...)
+		if n != 0 {
+			fmt.Printf("read:%s\n", tmp[:n])
+			buf = append(buf, tmp[:n]...)
+		}
+
 	}
-	fmt.Printf("total size:%d\n", len(buf))
+
 }
 
 func main() {
@@ -139,7 +139,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	conn.Write(s)
-	select {}
+	s := make([]byte, 40963)
+	for i := 0; i < 40963; i++ {
+		s[i] = '1'
+	}
+	bf := bytes.NewBuffer(s)
+	conn.Write(bf.Bytes())
+	conn.Close()
+	time.Sleep(10 * time.Second)
+	// select {}
 }
