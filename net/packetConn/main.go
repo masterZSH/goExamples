@@ -46,5 +46,4 @@ func main() {
 		}
 		fmt.Printf("%d,content:%s,msg:%q,src:%s\n", n, bs[:n], msg, src)
 	}
-
 }
