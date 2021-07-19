@@ -1,4 +1,4 @@
-package main
+package dumprequest
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func main() {
+func dump() {
 
 	// 创建一个http服务，构建处理请求方法
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
