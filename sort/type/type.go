@@ -5,20 +5,18 @@ import (
 	"sync"
 )
 
-type keyValues struct{
-	key string
+type keyValues struct {
+	key    string
 	values []string
 }
 
-type headerSorter struct{
+type headerSorter struct {
 	kvs []keyValues
 }
 
 var headerSorterPool = sync.Pool{
 	New: func() interface{} { return new(headerSorter) },
 }
-
-
 
 func main() {
 	// var st interface{} = new(keyValues)
@@ -32,22 +30,21 @@ func main() {
 	// fmt.Printf("%v",st);
 	// fmt.Printf("%v",s);
 	// fmt.Print(headerSorterPool.Get().(*headerSorter))
-	t=1
+	t = 1
 	returnInt()
-	t="123"g
+	t = "123"
 	returnString()
 
 }
 
 var t interface{}
 
-
-func returnInt () int{
+func returnInt() int {
 	fmt.Print(t)
 	return t.(int)
 }
 
-func returnString() string{
+func returnString() string {
 	fmt.Print(t)
 	return t.(string)
 }
