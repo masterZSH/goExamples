@@ -71,3 +71,9 @@ func parseDsn(dsn string) {
 	// username := strings.Split(dsn, ":")[0]
 
 }
+
+// parseDsnParams
+func parseDsnParams(parasmStr string) (result map[string]string) {
+	result = make(map[string]string)
+	return
+}
