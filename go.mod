@@ -3,6 +3,7 @@ module github.com/masterZSH/goExamples
 go 1.13
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.0 // indirect
 	github.com/Shopify/sarama v1.26.4
 	github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5
 	github.com/elazarl/goproxy v0.0.0-20201021153353-00ad82a08272
