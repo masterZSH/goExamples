@@ -1,4 +1,4 @@
-module github/masterZSH/goExamples
+module github.com/masterZSH/goExamples
 
 go 1.13
 
