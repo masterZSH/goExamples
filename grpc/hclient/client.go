@@ -21,6 +21,7 @@ package main
 import (
 	"context"
 	"log"
+	"net"
 	"os"
 	"time"
 
@@ -33,6 +34,11 @@ const (
 	defaultName = "world"
 )
 
+func dialerFunc(ctx context.Context, addr string) (net.Conn, error) {
+	var d net.Dialer
+	return d.DialContext(ctx, "tcp", addr)
+}
+
 func main() {
 	// Set up a connection to the server.
 	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
@@ -41,6 +47,7 @@ func main() {
 	}
 	defer conn.Close()
 	c := pb.NewGreeterClient(conn)
+	grpc.WithContextDialer(dialerFunc)
 
 	// Contact the server and print out its response.
 	name := defaultName
