@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+
+message M1 {
+
+    // 设置保留
+    enum Foo{
+
+        // 指定数值范围到最大值
+        reserved 2, 15, 9 to 11, 40 to max;
+        reserved "FOO", "BAR"; 
+        E = 0;
+
+        // FOO = 1; // error  Enum value "FOO" is reserved.
+        
+    }
+}
