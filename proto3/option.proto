@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+
+message M1 {
+    enum EnumAllowingAlias{
+        // 支持将相同的值分配给两个枚举常量
+        option allow_alias = true;
+        UNKNOWN = 0;
+        STARTED = 1; 
+        RUNNING = 1;
+    }
+}
+
+message M2 {
+    enum EnumNotAllowingAlias{
+        UNKNOWN = 0;
+        STARTED = 1; 
+        // RUNNING = 1; // 会报错
+    }
+}
