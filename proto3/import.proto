@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+// import protocol 
+import public "/other.proto";
+
+message S2 {
+
+}

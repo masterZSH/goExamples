@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message M {
+    // []string
+    repeated string snippets = 1;
+    
+    repeated Result list = 2;
+
+    message Result {
+        string url = 1;
+    }
+
+}
