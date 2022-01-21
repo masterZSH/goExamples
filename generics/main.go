@@ -9,6 +9,9 @@ func main() {
 		"2": 2,
 	}
 	s := SumIntsOrFloats(m)
+	// 详细写法
+	// s := SumIntsOrFloats[string, int64](m)
+
 	fmt.Println(s)
 }
 
