@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package foo.bar;
+message M{
+    foo.bar.Open o =1;
+}
