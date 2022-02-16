@@ -14,10 +14,10 @@ func main() {
 
 func Content(f string) (content []byte, err error) {
 	fi, err := os.Open(f)
-	defer fi.Close()
 	if err != nil {
 		return
 	}
+	defer fi.Close()
 	buf := make([]byte, 10)
 	for {
 		n, err := fi.Read(buf)
