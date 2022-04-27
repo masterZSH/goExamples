@@ -10,12 +10,13 @@ func main() {
 	// Contains 包含
 	t1 := funk.Contains([]string{"foo", "bar"}, "bar") // true
 	fmt.Println(t1)
+
 	// Intersect 交集
 	t2 := funk.Intersect([]int{1, 2, 3, 4}, []int{2, 4, 6}) // []int{2, 4}
 	fmt.Println(t2)
 
 	// Difference 差异
-	t3, t4 := funk.Difference([]int{1, 2, 3, 4}, []int{2, 4, 6})
+	t3, t4 := funk.Difference([]int{1, 2, 3, 4}, []int{2, 4, 6}) // []int{1,3} []int{6}
 	fmt.Println(t3, t4)
 
 	// IndexOf 位置
