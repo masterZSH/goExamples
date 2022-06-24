@@ -62,36 +62,36 @@ func handleConn(conn net.Conn) {
 
 }
 
-func ioCopy(dst io.Writer, src io.Reader, fn ...func(count int)) (written int64, isSrcErr bool, err error) {
-	buf := make([]byte, 32*1024)
-	for {
-		nr, er := src.Read(buf)
-		if nr > 0 {
-			nw, ew := dst.Write(buf[0:nr])
-			fmt.Printf("%s\n", buf[0:nr])
-			if nw > 0 {
-				written += int64(nw)
-				if len(fn) == 1 {
-					fn[0](nw)
-				}
-			}
-			if ew != nil {
-				err = ew
-				break
-			}
-			if nr != nw {
-				err = io.ErrShortWrite
-				break
-			}
-		}
-		if er != nil {
-			err = er
-			isSrcErr = true
-			break
-		}
-	}
-	return written, isSrcErr, err
-}
+// func ioCopy(dst io.Writer, src io.Reader, fn ...func(count int)) (written int64, isSrcErr bool, err error) {
+// 	buf := make([]byte, 32*1024)
+// 	for {
+// 		nr, er := src.Read(buf)
+// 		if nr > 0 {
+// 			nw, ew := dst.Write(buf[0:nr])
+// 			fmt.Printf("%s\n", buf[0:nr])
+// 			if nw > 0 {
+// 				written += int64(nw)
+// 				if len(fn) == 1 {
+// 					fn[0](nw)
+// 				}
+// 			}
+// 			if ew != nil {
+// 				err = ew
+// 				break
+// 			}
+// 			if nr != nw {
+// 				err = io.ErrShortWrite
+// 				break
+// 			}
+// 		}
+// 		if er != nil {
+// 			err = er
+// 			isSrcErr = true
+// 			break
+// 		}
+// 	}
+// 	return written, isSrcErr, err
+// }
 
 func pipe(dst io.Writer, src io.Reader) (err error) {
 	buf := make([]byte, 32*1024)
