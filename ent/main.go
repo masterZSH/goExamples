@@ -33,8 +33,6 @@ func main() {
 	users, err := client.User.
 		Query().
 		Where(user.Name("a8m")).
-		// `Only` fails if no user found,
-		// or more than 1 user returned.
 		All(context.Background())
 	if err != nil {
 		log.Fatalf("failed get user: %w", err)
