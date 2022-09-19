@@ -32,3 +32,10 @@ func BenchmarkStringToSliceByteDefault(b *testing.B) {
 		_ = []byte(str)
 	}
 }
+
+func BenchmarkStringToSliceByteV2(b *testing.B) {
+	str := "123"
+	for i := 0; i < b.N; i++ {
+		StringToSliceByteV2(str)
+	}
+}
