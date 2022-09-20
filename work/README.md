@@ -1,3 +1,5 @@
+go work 替换 replace
+
 ```
 go run example.com/foo
 
