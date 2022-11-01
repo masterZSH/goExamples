@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
+	"os"
 	"time"
 )
 
@@ -72,5 +74,19 @@ func main() {
 	copyBuffer(&dst, src, nil)
 
 	fmt.Printf("%s\n", dst.String())
+
+	//
+	reader, writer := io.Pipe()
+
+	go func() {
+		// fmt.Fprint(writer, "some io.Reader stream to be read\n")
+		// writer.Close()
+		writer.Write([]byte("1234"))
+		writer.Close()
+	}()
+
+	if _, err := io.Copy(os.Stdout, reader); err != nil {
+		log.Fatal(err)
+	}
 
 }
