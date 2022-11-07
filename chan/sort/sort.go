@@ -1,8 +1,9 @@
 package main
 
-import "time"
-
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type Empty interface{}
 
