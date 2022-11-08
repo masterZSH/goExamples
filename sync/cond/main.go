@@ -6,11 +6,9 @@ import (
 	"time"
 )
 
-//
 // Cond
 //
 // 多个goroutines等待、1个goroutine通知事件发生。
-//
 func main() {
 
 	var l sync.Mutex
