@@ -16,9 +16,16 @@ func main() {
 	}
 	fmt.Println(mr.Addr())
 	client := redis.NewClient(&redis.Options{
+		// Addr: "123.123.123.123:80",
 		Addr: mr.Addr(),
 	})
 	ctx := context.Background()
+	pong, err := client.Ping(ctx).Result()
+	if err != nil {
+		// 连接失败
+		log.Println(err)
+	}
+	fmt.Println(pong, err)
 	err = client.Set(ctx, "key", "value", 0).Err()
 	if err != nil {
 		log.Fatal(err)
