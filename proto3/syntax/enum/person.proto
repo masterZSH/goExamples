@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option go_package = "./person";
+
+enum Color {
+  Red = 0;
+  Blue = 1;
+  Pink = 2;
+}
+
+message Person {
+  string name = 1;
+  int32 id = 2;
+  string email = 3;
+  Color color = 4;
+}

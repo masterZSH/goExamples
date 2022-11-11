@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "./person";
+
+message Person {
+  string name = 1;
+  int32 id = 2;
+  string email = 3;
+  oneof test_oneof { // 最多设置 ext/sub_message中的一个字段
+    string ext = 4;
+    string sub_message = 9;
+  }
+}

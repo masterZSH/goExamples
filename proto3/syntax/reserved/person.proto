@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = "./person";
+
+message Person {
+  reserved  2, 15, 9 to 11, 40 to max;
+  int32 id = 2;
+  string email = 3;
+  reserved "FOO", "BAR"; // 保留字段
+  string FOO = 4; // Field name "FOO" is reserved.
+}
