@@ -50,7 +50,7 @@ func main() {
 
 	// 1s读取10个
 	rl := NewLimiterReader(file, 10)
-	buf := make([]byte, 1)
+	buf := make([]byte, 10)
 
 	start := time.Now()
 	for {
