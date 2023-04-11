@@ -2,12 +2,12 @@
 
 证书生成
 ```bash
-openssl req -newkey rsa:2048 -nodes -keyout server.key -x509 -days 365 -out server.crt
+openssl req -newkey rsa:2048 -nodes -keyout server.key -x509 -days 365 -out server.crt -addext "subjectAltName = DNS:localhost"
 ```
 
 server
 ```bash
-cd http2 && go run server/index.go
+cd http2/server && go run index.go
 ```
 
 client 
