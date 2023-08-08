@@ -27,7 +27,7 @@ require (
 	github.com/pkg/profile v1.5.0
 	github.com/rcrowley/go-metrics v0.0.0-20200313005456-10cdbea86bc0 // indirect
 	github.com/streadway/amqp v1.0.0
-	github.com/stretchr/testify v1.7.1-0.20210427113832-6241f9ab9942 // indirect
+	github.com/stretchr/testify v1.7.1-0.20210427113832-6241f9ab9942
 	go.opencensus.io v0.23.0 // indirect
 	go.uber.org/goleak v1.1.10
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
