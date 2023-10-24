@@ -12,8 +12,11 @@ cp $(go env GOROOT)/misc/wasm/wasm_exec.js .
 
 start
 ```
-goexec 'http.ListenAndServe(`:8080`, http.FileServertp.Dir(`.`)))'
+goexec 'log.Fatal(http.ListenAndServe(":8080", http.FileServer(http.Dir("."))))'
 ```
 
 http://localhost:8080/index.html
 
+
+
+https://golangbot.com/webassembly-using-go/

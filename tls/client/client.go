@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	conn, err := tls.Dial("tcp", "localhost:2666", &tls.Config{
+	conn, err := tls.Dial("tcp", "localhost:12345", &tls.Config{
 		InsecureSkipVerify: true,
 	})
 	if err != nil {
