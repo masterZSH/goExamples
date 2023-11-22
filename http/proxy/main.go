@@ -9,6 +9,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -34,7 +35,24 @@ func handleConn(conn net.Conn) {
 		return
 	}
 	rq.URL, _ = url.Parse(rq.URL.String())
-	rc, err := net.DialTimeout("tcp", rq.Host, 3*time.Second)
+	var host string
+	port := 80
+	if rq.URL.Host == "" {
+		rq.URL.Host = rq.Host
+	}
+	if rq.URL.Scheme == "https" {
+		port = 443
+	}
+	switch {
+	case strings.Contains(rq.URL.Host, ":443"):
+		fallthrough
+	case strings.Contains(rq.URL.Host, ":80"):
+		host = rq.URL.Host
+	default:
+		host = fmt.Sprintf("%s:%d", rq.URL.Host, port)
+	}
+
+	rc, err := net.DialTimeout("tcp", host, 3*time.Second)
 	if err != nil {
 		return
 	}
@@ -43,6 +61,8 @@ func handleConn(conn net.Conn) {
 		if _, err = fmt.Fprintf(conn, "HTTP/%d.%d %03d %s\r\n\r\n", rq.ProtoMajor, rq.ProtoMinor, http.StatusOK, "Connection established"); err != nil {
 			return // close connection
 		}
+	} else {
+		rq.Write(rc)
 	}
 
 	// resp, err := http.DefaultClient.Do(rq)

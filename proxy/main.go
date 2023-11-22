@@ -3,14 +3,16 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"log"
 	"net"
 	"net/http"
-	"net/url"
+
+	"github.com/cloudwego/hertz/pkg/protocol/http1/resp"
 )
 
 func main() {
-	l, err := net.Listen("tcp", "0.0.0.0:59514")
+	l, err := net.Listen("tcp", "0.0.0.0:6666")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -42,14 +44,25 @@ func handleConn(c net.Conn) {
 		}
 	}
 
-	rq.RequestURI = ""
-	rq.URL.Scheme = "http"
-	rq.URL, _ = url.Parse(rq.URL.String())
-	rq.URL.Host = rq.Host
-	resp, err := http.DefaultClient.Do(rq)
+	rc, err := net.Dial("tcp", rq.Host)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
+	defer rc.Close()
+	rc.Write(c)
+	go io.Copy(remoteConn, c.reqConn)
+
+	io.Copy(c.reqConn, remoteConn)
+
+	// rq.RequestURI = ""
+	// rq.URL.Scheme = "http"
+	// rq.URL, _ = url.Parse(rq.URL.String())
+	// rq.URL.Host = rq.Host
+	// resp, err := http.DefaultClient.Do(rq)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	return
+	// }
 	resp.Write(c)
 }

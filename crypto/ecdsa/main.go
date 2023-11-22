@@ -17,7 +17,7 @@ func main() {
 
 	msg := "test"
 	hash := sha256.Sum256([]byte(msg))
-	sig, err := ecdsa.SignASN1(rand.Reader, privateKey, hash[:])
+	sig, err := ecdsa.SignA	SN1(rand.Reader, privateKey, hash[:])
 	if err != nil {
 		panic(err)
 	}
