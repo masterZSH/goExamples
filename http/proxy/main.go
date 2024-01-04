@@ -9,7 +9,6 @@ import (
 	"net"
 	"net/http"
 	"net/url"
-	"strings"
 	"time"
 )
 
@@ -30,28 +29,18 @@ func main() {
 }
 
 func handleConn(conn net.Conn) {
-	rq, err := http.ReadRequest(bufio.NewReader(conn))
+	rd := bufio.NewReader(conn)
+	rq, err := http.ReadRequest(rd)
 	if err != nil {
 		return
 	}
 	rq.URL, _ = url.Parse(rq.URL.String())
-	var host string
-	port := 80
 	if rq.URL.Host == "" {
 		rq.URL.Host = rq.Host
-	}
-	if rq.URL.Scheme == "https" {
-		port = 443
-	}
-	switch {
-	case strings.Contains(rq.URL.Host, ":443"):
-		fallthrough
-	case strings.Contains(rq.URL.Host, ":80"):
-		host = rq.URL.Host
-	default:
-		host = fmt.Sprintf("%s:%d", rq.URL.Host, port)
-	}
 
+	}
+	h, p := SplitHost(rq.URL.Host)
+	host := fmt.Sprintf("%s:%s", h, p)
 	rc, err := net.DialTimeout("tcp", host, 3*time.Second)
 	if err != nil {
 		return
@@ -65,21 +54,17 @@ func handleConn(conn net.Conn) {
 		rq.Write(rc)
 	}
 
-	// resp, err := http.DefaultClient.Do(rq)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return
-	// }
-	// resp.Write(conn)
-	// go io.Copy(rc, conn)
-
-	//
-	// go ioCopy(rc, conn)
-	// go ioCopy(conn, rc)
-
 	go pipe(rc, conn)
 	go pipe(conn, rc)
 
+}
+
+func SplitHost(host string) (string, string) {
+	result, port, err := net.SplitHostPort(host)
+	if err != nil {
+		return host, "80"
+	}
+	return result, port
 }
 
 // func ioCopy(dst io.Writer, src io.Reader, fn ...func(count int)) (written int64, isSrcErr bool, err error) {
