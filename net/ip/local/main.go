@@ -20,7 +20,6 @@ func ipIsLocal(ip net.IP) bool {
 
 func main() {
 	ip := net.ParseIP("192.168.1.21")
-
 	r := v4Loopback.Contains(ip)
 	fmt.Println(r)
 }

@@ -1,17 +1,19 @@
-<html>
-	<head>
-		<meta charset="utf-8"/>
-		<script src="wasm_exec.js"></script>
-		<script>
-			const go = new Go();
+<!DOCTYPE html>
+<html lang="en">
 
-			WebAssembly.instantiateStreaming(fetch("json.wasm"), go.importObject).then((result) => {
-				go.run(result.instance);
-				formatJSON(`{"website":"golangbot.com", "tutorials": {"string":"https://golangbot.com/strings/"}}`)
-			});
+<head>
+	<meta charset="utf-8" />
+	<script src="wasm_exec.js"></script>
+	<script>
+		const go = new Go();
+		WebAssembly.instantiateStreaming(fetch("time.wasm"), go.importObject).then((result) => {
+			go.run(result.instance);
+		});
+	</script>
+</head>
 
-		
-		</script>
-	</head>
-	<body></body>
+<body>
+
+</body>
+
 </html>

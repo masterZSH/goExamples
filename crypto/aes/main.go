@@ -12,7 +12,8 @@ import (
 const NonceLength = 12
 
 // key len 16,      24,      or 32
-//         AES-128, AES-192, or AES-256.
+//
+//	AES-128, AES-192, or AES-256.
 func Encrypt(key []byte, data []byte) ([]byte, error) {
 	// Create a new AES cipher
 	block, err := aes.NewCipher(key)

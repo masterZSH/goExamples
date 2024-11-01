@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/alicebob/miniredis"
 	"github.com/go-redis/redis/v9"
@@ -36,5 +37,17 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(val)
+
+	// test setex
+	err = client.SetEx(ctx, "key2", "value2", 1*time.Second).Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+	time.Sleep(2 * time.Second)
+	val, err = client.Get(ctx, "key2").Result()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("--", val)
 
 }
