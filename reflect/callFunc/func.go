@@ -5,26 +5,25 @@ import (
 	"reflect"
 )
 
-type User struct{
-	Name,Addr string
+type User struct {
+	Name, Addr string
 }
 
-func (u *User) GetName() (string,error){
-	fmt.Printf("%s,\n",u.Name)
-	return u.Name,nil
+func (u *User) GetName() (string, error) {
+	fmt.Printf("%s,\n", u.Name)
+	return u.Name, nil
 }
 
-func NewUser() *User{
+func NewUser() *User {
 	return new(User)
 }
 
-func main(){
-	u:= NewUser()
+func main() {
+	u := NewUser()
 	u.Name = "12345"
 	getValue := reflect.ValueOf(u)
 	methodName := getValue.MethodByName("GetName")
-	args:= []reflect.Value{}
-	name:= methodName.Call(args)
+	args := []reflect.Value{}
+	name := methodName.Call(args)
 	fmt.Println(name)
 }
-
