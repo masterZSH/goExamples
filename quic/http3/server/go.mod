@@ -1,6 +1,8 @@
 module main
 
-go 1.19
+go 1.21
+
+toolchain go1.22.4
 
 require github.com/quic-go/quic-go v0.42.0
 

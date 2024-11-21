@@ -48,9 +48,9 @@ func main() {
 		panic(err)
 	}
 
-	// 1s读取10个
-	rl := NewLimiterReader(file, 10)
-	buf := make([]byte, 10)
+	// 1s读取1个
+	rl := NewLimiterReader(file, 1)
+	buf := make([]byte, 5)
 
 	start := time.Now()
 	for {
