@@ -9,7 +9,7 @@ require (
 	github.com/masterZSH/rservices v0.0.0-20201127085618-f80e43867c9b
 	github.com/rcrowley/go-metrics v0.0.0-20200313005456-10cdbea86bc0
 	github.com/smallnest/rpcx v0.0.0-20201027145221-c31b15be63d4
-	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
+	golang.org/x/crypto v0.31.0 // indirect
 )
 
 replace google.golang.org/grpc => google.golang.org/grpc v1.29.0
